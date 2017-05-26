@@ -168,19 +168,28 @@ window.onload = function() {
 
     // Initialize the game
     function init() {
+        //
         // Load images
+        //
+      
         images = loadImages([imagePath + "bubble-sprites.png"]);
         bubbleimage = images[0];
 
         gameBG = new Image();
         gameBG.src = imagePath + 'arrow-game.png';
 
+        //
         // Add mouse events
+        //
+      
         canvas.addEventListener("mousemove", onMouseMove);
         canvas.addEventListener("mousedown", onMouseDown);
-//        canvas.addEventListener("touchend", onTouchEnd);
+        // canvas.addEventListener("touchend", onTouchEnd);
 
+        //
         // Initialize the two-dimensional tile array
+        //
+      
         for (var i=0; i<level.columns; i++) {
             level.tiles[i] = [];
             for (var j=0; j<level.rows; j++) {
@@ -192,21 +201,29 @@ window.onload = function() {
         level.width = level.columns * level.tilewidth + level.tilewidth/2;
         level.height = (level.rows-1) * level.rowheight + level.tileheight;
 
+        //
         // Init the player
+        //  
+      
         // TODO: Set offset for player position here!!!
         player.x = level.x + level.width/2 - level.tilewidth/2;
-        // TODO
         player.y = level.y + level.height + 20;
+        
         player.angle = 90;
         player.tiletype = 0;
 
         player.nextbubble.x = player.x - 2 * level.tilewidth;
         player.nextbubble.y = player.y;
 
+        //
         // New game
+        //
+
         newGame();
 
+        //
         // Enter main loop
+        //
         main(0);
     }
 
@@ -786,6 +803,8 @@ window.onload = function() {
             var $modal = $('.js-game-won');
             $modal.addClass('js-game-won-open');
             $(canvas).addClass('js-game-close');
+            
+            $('#viewport').hide();
         }
 
         // Game Lost overlay
@@ -793,6 +812,8 @@ window.onload = function() {
             var $modal = $('.js-game-lost');
             $modal.addClass('js-game-won-open');
             $(canvas).addClass('js-game-close');
+
+            $('#viewport').hide();
         }
     }
 
@@ -1107,7 +1128,3 @@ window.onload = function() {
     // Call init to start the game
     init();
 };
-
-$('.js-play-again').on('click', function() {
-   location.reload();
-})
