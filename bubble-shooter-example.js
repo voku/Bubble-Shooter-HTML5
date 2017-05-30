@@ -35,8 +35,8 @@ window.onload = function() {
     var canvas = document.getElementById("viewport");
     var context = canvas.getContext("2d");
 
-    //var imagePath = '/themes/hlt/images/gs201706/';
-    var imagePath = '../images/gs201706/';
+    var imagePath = '/themes/hlt/images/gs201706/';
+    //var imagePath = '../images/gs201706/';
 
     // Timing and frames per second
     var lastframe = 0;
@@ -127,6 +127,7 @@ window.onload = function() {
     var images = [];
     var bubbleimage;
     var gameBG;
+    var gameArrow;
 
     // Image loading global variables
     var loadcount = 0;
@@ -171,17 +172,22 @@ window.onload = function() {
         //
         // Load images
         //
-      
+
+        // Draw level background
+        //var gameBG = document.getElementById('gameBG');
+        gameBG = new Image();
+        gameBG.src = imagePath + 'bg-game.png';
+
         images = loadImages([imagePath + "bubble-sprites.png"]);
         bubbleimage = images[0];
 
-        gameBG = new Image();
-        gameBG.src = imagePath + 'arrow-game.png';
+        gameArrow = new Image();
+        gameArrow.src = imagePath + 'arrow-game.png';
 
         //
         // Add mouse events
         //
-      
+
         canvas.addEventListener("mousemove", onMouseMove);
         canvas.addEventListener("mousedown", onMouseDown);
         // canvas.addEventListener("touchend", onTouchEnd);
@@ -189,7 +195,7 @@ window.onload = function() {
         //
         // Initialize the two-dimensional tile array
         //
-      
+
         for (var i=0; i<level.columns; i++) {
             level.tiles[i] = [];
             for (var j=0; j<level.rows; j++) {
@@ -203,12 +209,12 @@ window.onload = function() {
 
         //
         // Init the player
-        //  
-      
+        //
+
         // TODO: Set offset for player position here!!!
         player.x = level.x + level.width/2 - level.tilewidth/2;
         player.y = level.y + level.height + 20;
-        
+
         player.angle = 90;
         player.tiletype = 0;
 
@@ -767,14 +773,6 @@ window.onload = function() {
 
         var yoffset =  level.tileheight/2;
 
-        // Draw level background
-        var gameBG = document.getElementById('gameBG');
-        gameBG = new Image();
-        gameBG.src = imagePath + 'bg-game.png';
-        gameBG.onload = function(){
-          context.drawImage(gameBG, 0, 0);
-        };
-
         // Render tiles
         renderTiles();
 
@@ -803,7 +801,7 @@ window.onload = function() {
             var $modal = $('.js-game-won');
             $modal.addClass('js-game-won-open');
             $(canvas).addClass('js-game-close');
-            
+
             $('#viewport').hide();
         }
 
@@ -819,6 +817,10 @@ window.onload = function() {
 
     // Draw a frame around the game
     function drawFrame() {
+
+
+        context.drawImage(gameBG, 0, 0);
+
         // Draw background
         /*
         context.fillStyle = "#303030";
@@ -898,7 +900,7 @@ window.onload = function() {
         };
         */
         //context.rotate(Math.cos(degToRad(player.angle)), Math.sin(degToRad(player.angle)));
-        context.drawImage(gameBG, centerx - 35, centery - 55);
+        context.drawImage(gameArrow, centerx - 35, centery - 55);
 
         // Draw the angle
         context.lineWidth = 2;
